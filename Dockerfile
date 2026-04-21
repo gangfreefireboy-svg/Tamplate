@@ -3,13 +3,17 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt install -y \
-    bash \
     curl \
-    sudo \
+    wget \
+    git \
+    nano \
     python3 \
     python3-pip \
-    git
+    openssh-server \
+    ttyd
 
-WORKDIR /app
+# Set root password
+RUN echo "root:root" | chpasswd
 
-CMD ["bash"]
+# Start terminal via web
+CMD ttyd -p 7860 bash
